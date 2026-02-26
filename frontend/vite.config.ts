@@ -5,7 +5,7 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
-    exclude: ["lucide-react", "@countrystatecity/countries"],
+    exclude: ["@countrystatecity/countries"],
   },
   build: {
     outDir: "dist",
@@ -82,10 +82,11 @@ export default defineConfig({
     cssCodeSplit: true,          // Split CSS for better caching
   },
   server: {
-    historyApiFallback: true,
+    port: 3000,
+    strictPort: true,
     proxy: {
       "/auth": {
-        target: "http://localhost:3000",
+        target: "http://localhost:8000",
         changeOrigin: true,
       },
       "/api": {

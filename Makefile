@@ -1,5 +1,15 @@
+dev:
+	$(MAKE) back & $(MAKE) front & wait
+
+infra:
+	docker compose up db redis
+
 back:
-	cd backend && uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+	cd backend && \
+	DATABASE_URL=postgresql://postgres:postgres@localhost:5433/propertyflow \
+	REDIS_URL=redis://localhost:6380/0 \
+	SECRET_KEY=debug_challenge_secret \
+	uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 front:
 	cd frontend && npm run dev
